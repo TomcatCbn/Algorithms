@@ -1,7 +1,7 @@
 package com.cbn.leetcode.model;
 
 public class TreeNode {
-	protected int val;
+	public int val;
 	public TreeNode left;
 	public TreeNode right;
 

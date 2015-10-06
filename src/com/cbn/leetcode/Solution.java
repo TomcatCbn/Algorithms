@@ -3,6 +3,7 @@ package com.cbn.leetcode;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import com.cbn.leetcode.model.ListNode;
 import com.cbn.leetcode.model.TreeNode;
 
 /**
@@ -118,5 +119,62 @@ public class Solution {
 	 */
 	public int maxDepth(TreeNode root) {
 		return (root == null) ? 0 : Math.max(1 + maxDepth(root.left), 1 + maxDepth(root.right));
+	}
+
+	/**
+	 * #237 Write a function to delete a node (except the tail) in a singly
+	 * linked list, given only access to that node. Supposed the linked list is
+	 * 1 -> 2 -> 3 -> 4 and you are given the third node with value 3, the
+	 * linked list should become 1 -> 2 -> 4 after calling your function.
+	 * 
+	 * @param node
+	 */
+	public void deleteNode(ListNode node) {
+		if (node == null)
+			return;
+		if (node.next != null) {
+			node.val = node.next.val;
+			node.next = node.next.next;
+		}
+	}
+
+	/**
+	 * #100 Given two binary trees, write a function to check if they are equal
+	 * or not. Two binary trees are considered equal if they are structurally
+	 * identical and the nodes have the same value.
+	 * 
+	 * @param p
+	 * @param q
+	 * @return
+	 */
+	public boolean isSameTree(TreeNode p, TreeNode q) {
+		if (p == null && q == null)
+			return true;
+		if (p == null || q == null)
+			return false;
+		if (p.val == q.val) {
+			return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+		} else
+			return false;
+	}
+
+	/**
+	 * #191 Write a function that takes an unsigned integer and returns the
+	 * number of '1' bits it has (also known as the Hamming weight). For
+	 * example, the 32-bit integer ’11' has binary representation
+	 * 00000000000000000000000000001011, so the function should return 3.
+	 * 
+	 * 
+	 * @param n
+	 * @return
+	 */
+	public int hammingWeight(int n) {
+		int res = 0;
+		while (n != 0) {
+			res = (n ^ (n - 1)) == 1 ? res + 1 : res;
+//			res = (n & 1) == 1 ? res + 1 : res;
+			n = n >>> 1;
+		}
+		return res;
 	}
 }

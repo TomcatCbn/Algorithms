@@ -1,9 +1,11 @@
 package com.cbn.leetcode.test;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
 import com.cbn.leetcode.Solution;
-import junit.framework.Assert;
+import com.cbn.leetcode.model.ListNode;
 
 /**
  * 
@@ -35,5 +37,29 @@ public class LeetcodeTest {
 		for (int i : nums) {
 			System.out.println(i);
 		}
+	}
+	
+	@Test
+	public void testDeleteNode(){
+		ListNode head=new ListNode(1);
+		ListNode temp=head;
+		temp.next=new ListNode(2);
+		temp=temp.next;
+		temp.next=new ListNode(3);
+		temp=temp.next;
+		temp.next=new ListNode(4);
+		solution.deleteNode(temp);
+		temp=head;
+		while(temp!=null){
+			System.out.print(temp.toString());
+			temp=temp.next;
+		}
+	}
+	
+	@Test
+	public void testHammingWeight(){
+		int n= 11;
+		Assert.assertEquals(3, solution.hammingWeight(n));
+		
 	}
 }

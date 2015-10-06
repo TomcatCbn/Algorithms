@@ -3,6 +3,8 @@ package com.cbn.leetcode;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import com.cbn.leetcode.model.TreeNode;
+
 /**
  * 
  * @author boning
@@ -96,8 +98,7 @@ public class Solution {
 	private boolean isBadVersion(int mid) {
 		return false;
 	}
-	
-	
+
 	/**
 	 * #258 Given a non-negative integer num, repeatedly add all its digits
 	 * until the result has only one digit.
@@ -107,5 +108,15 @@ public class Solution {
 	 */
 	public int addDigits(int num) {
 		return (num < 10) ? num : ((num - 10) % 9) + 1;
+	}
+
+	/**
+	 * #104 Given a binary tree, find its maximum depth.
+	 * 
+	 * @param root
+	 * @return
+	 */
+	public int maxDepth(TreeNode root) {
+		return (root == null) ? 0 : Math.max(1 + maxDepth(root.left), 1 + maxDepth(root.right));
 	}
 }

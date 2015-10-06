@@ -96,4 +96,16 @@ public class Solution {
 	private boolean isBadVersion(int mid) {
 		return false;
 	}
+	
+	
+	/**
+	 * #258 Given a non-negative integer num, repeatedly add all its digits
+	 * until the result has only one digit.
+	 * 
+	 * @param num
+	 * @return
+	 */
+	public int addDigits(int num) {
+		return (num < 10) ? num : ((num - 10) % 9) + 1;
+	}
 }

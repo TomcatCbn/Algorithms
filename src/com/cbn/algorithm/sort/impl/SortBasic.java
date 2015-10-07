@@ -1,7 +1,11 @@
 package com.cbn.algorithm.sort.impl;
 
 import com.cbn.algorithm.sort.ISort;
-
+/**
+ * 排序类的基类
+ * @author boning
+ *
+ */
 @SuppressWarnings("rawtypes")
 public abstract class SortBasic implements ISort {
 

@@ -7,6 +7,7 @@ import com.cbn.leetcode.model.ListNode;
 import com.cbn.leetcode.model.TreeNode;
 
 /**
+ * Leetcode解答
  * 
  * @author boning
  *
@@ -172,9 +173,56 @@ public class Solution {
 		int res = 0;
 		while (n != 0) {
 			res = (n ^ (n - 1)) == 1 ? res + 1 : res;
-//			res = (n & 1) == 1 ? res + 1 : res;
+			// res = (n & 1) == 1 ? res + 1 : res;
 			n = n >>> 1;
 		}
 		return res;
+	}
+
+	/**
+	 * #217 Given an array of integers, find if the array contains any
+	 * duplicates. Your function should return true if any value appears at
+	 * least twice in the array, and it should return false if every element is
+	 * distinct.
+	 * 
+	 * @param nums
+	 * @return
+	 */
+	public boolean containsDuplicate(int[] nums) {
+		int length = nums.length;
+		if (length <= 1)
+			return false;
+		HashSet<Integer> set = new HashSet<Integer>();
+		for (int i = 0; i < length; i++) {
+			set.add(nums[i]);
+			if (set.size() != (i + 1))
+				return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Given a non-negative number represented as an array of digits, plus one
+	 * to the number. The digits are stored such that the most significant digit
+	 * is at the head of the list.
+	 * 
+	 * @param digits
+	 * @return
+	 */
+	public int[] plusOne(int[] digits) {
+		int n = digits.length;
+		for (int i = n - 1; i >= 0; i--) {
+			if (digits[i] < 9) {
+				digits[i]++;
+				return digits;
+			}
+
+			digits[i] = 0;
+		}
+
+		int[] newNumber = new int[n + 1];
+		newNumber[0] = 1;
+
+		return newNumber;
 	}
 }

@@ -1,5 +1,9 @@
 package com.cbn.algorithm.sort.impl;
-
+/**
+ * 选择排序
+ * @author boning
+ *
+ */
 @SuppressWarnings("rawtypes")
 public class SelectionSort extends SortBasic {
 

@@ -225,4 +225,28 @@ public class Solution {
 
 		return newNumber;
 	}
+
+	/**
+	 * #226 Invert a binary tree.
+	 * 
+	 * @param root
+	 * @return
+	 */
+	public TreeNode invertTree(TreeNode root) {
+		if (null != root)
+			invertTree0(root);
+		return root;
+
+	}
+
+	private void invertTree0(TreeNode root) {
+		if (null != root) {
+			invertTree0(root.left);
+			invertTree0(root.right);
+			TreeNode temp = root.left;
+			root.left = root.right;
+			root.right = temp;
+		} else
+			return;
+	}
 }

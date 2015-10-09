@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.cbn.algorithm.sort.SortContext;
+import com.cbn.algorithm.sort.impl.HeapSort;
 import com.cbn.algorithm.sort.impl.ImprovedQuickSort;
 import com.cbn.algorithm.sort.impl.InsertionSort;
 import com.cbn.algorithm.sort.impl.MergeBuSort;
@@ -22,6 +23,7 @@ public class SortTest {
 	public void init() {
 		sortUtils = new SortContext();
 		a = new Integer[] { 6, 4, 10, 9, 7, 7, 8, 10, 11, 15, 1, 3, 21 };
+		//a = new Integer[] { 6, 4, 10 };
 	}
 
 	// 选择排序
@@ -87,4 +89,13 @@ public class SortTest {
 		sortUtils.doSort(a);
 		Assert.assertEquals(true, sortUtils.isSorted(a));
 	}
+	
+	//堆排序
+	@Test
+	public void testHeapSort() {
+		sortUtils.setSort(new HeapSort());
+		sortUtils.doSort(a);
+		Assert.assertEquals(true, sortUtils.isSorted(a));
+	}
+	
 }

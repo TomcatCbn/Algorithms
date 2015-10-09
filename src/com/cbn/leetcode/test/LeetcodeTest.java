@@ -62,4 +62,10 @@ public class LeetcodeTest {
 		Assert.assertEquals(3, solution.hammingWeight(n));
 		
 	}
+	@Test
+	public void testIsAnagram(){
+		String s="a";
+		String t="b";
+		Assert.assertEquals(false, solution.isAnagram(s, t));
+	}
 }

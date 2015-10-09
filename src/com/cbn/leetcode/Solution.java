@@ -249,4 +249,65 @@ public class Solution {
 		} else
 			return;
 	}
+
+	/**
+	 * #169 Majority Element Given an array of size n, find the majority
+	 * element. The majority element is the element that appears more than ⌊ n/2
+	 * ⌋ times.
+	 * 
+	 * You may assume that the array is non-empty and the majority element
+	 * always exist in the array.
+	 * 
+	 * @param nums
+	 * @return
+	 */
+	public int majorityElement(int[] nums) {
+		int length = nums.length;
+		int num = 1, temp = nums[0];
+		for (int i = 1; i < length; i++) {
+			if (temp == nums[i])
+				num++;
+			else {
+				if (num == 0) {
+					num = 1;
+					temp = nums[i];
+				} else {
+					num--;
+					if (num == 0)
+						temp = nums[i];
+				}
+			}
+		}
+		return temp;
+	}
+
+	/**
+	 * Valid Anagram Given two strings s and t, write a function to determine if
+	 * t is an anagram of s.
+	 * 
+	 * For example, s = "anagram", t = "nagaram", return true. s = "rat", t =
+	 * "car", return false.
+	 * 
+	 * @param s
+	 * @param t
+	 * @return
+	 */
+	public boolean isAnagram(String s, String t) {
+		int lengthS = s.length();
+		int lengthT = t.length();
+		if (lengthS != lengthT)
+			return false;
+		int[] a = new int[26];
+		for (int i = 0; i < lengthS; i++) {
+			int tempa = s.charAt(i) - 97;
+			a[tempa]++;
+			int tempb = t.charAt(i) - 97;
+			a[tempb]--;
+		}
+		for (int i = 0; i < 26; i++) {
+			if (a[i] != 0)
+				return false;
+		}
+		return true;
+	}
 }

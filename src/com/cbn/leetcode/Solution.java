@@ -310,4 +310,70 @@ public class Solution {
 		}
 		return true;
 	}
+
+	/**
+	 * #83 Remove Duplicates from Sorted List Given a sorted linked list, delete
+	 * all duplicates such that each element appear only once.
+	 * 
+	 * For example, Given 1->1->2, return 1->2. Given 1->1->2->3->3, return
+	 * 1->2->3.
+	 * 
+	 * @param head
+	 * @return
+	 */
+	public ListNode deleteDuplicates(ListNode head) {
+		ListNode temp = head;
+		while (temp != null) {
+			ListNode temp2 = temp;
+			while (temp.next != null && temp.val == temp.next.val) {
+				temp = temp.next;
+			}
+			temp2.next = temp.next;
+			temp = temp.next;
+		}
+		return head;
+	}
+
+	/**
+	 * #206 Reverse Linked List
+	 * 
+	 * @param head
+	 * @return
+	 */
+	public ListNode reverseList(ListNode head) {
+		if (head == null)
+			return null;
+		ListNode L1 = head, L2, L3;
+		L2 = L1.next;
+		L1.next = null;
+		while (L2 != null) {
+			L3 = L2.next;
+			L2.next = L1;
+			L1 = L2;
+			L2 = L3;
+		}
+		return L1;
+	}
+
+	/**
+	 * #70 Climbing Stairs
+	 * 
+	 * @param n
+	 * @return
+	 */
+	public int climbStairs(int n) {
+		if (n == 1)
+			return 1;
+		if (n == 2)
+			return 2;
+		int a = 1, b = 2, i = 3;
+
+		while (i <= n) {
+			int c = a + b;
+			a = b;
+			b = c;
+			i++;
+		}
+		return b;
+	}
 }

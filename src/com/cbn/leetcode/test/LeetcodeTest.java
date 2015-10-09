@@ -38,34 +38,63 @@ public class LeetcodeTest {
 			System.out.println(i);
 		}
 	}
-	
+
 	@Test
-	public void testDeleteNode(){
-		ListNode head=new ListNode(1);
-		ListNode temp=head;
-		temp.next=new ListNode(2);
-		temp=temp.next;
-		temp.next=new ListNode(3);
-		temp=temp.next;
-		temp.next=new ListNode(4);
+	public void testDeleteNode() {
+		ListNode head = new ListNode(1);
+		ListNode temp = head;
+		temp.next = new ListNode(2);
+		temp = temp.next;
+		temp.next = new ListNode(3);
+		temp = temp.next;
+		temp.next = new ListNode(4);
 		solution.deleteNode(temp);
-		temp=head;
-		while(temp!=null){
+		temp = head;
+		while (temp != null) {
 			System.out.print(temp.toString());
-			temp=temp.next;
+			temp = temp.next;
 		}
 	}
-	
+
 	@Test
-	public void testHammingWeight(){
-		int n= 11;
+	public void testHammingWeight() {
+		int n = 11;
 		Assert.assertEquals(3, solution.hammingWeight(n));
-		
+
 	}
+
 	@Test
-	public void testIsAnagram(){
-		String s="a";
-		String t="b";
+	public void testIsAnagram() {
+		String s = "a";
+		String t = "b";
 		Assert.assertEquals(false, solution.isAnagram(s, t));
+	}
+
+	@Test
+	public void testDeleteDuplicates() {
+		ListNode head = new ListNode(1);
+		ListNode temp = head;
+		temp.next = new ListNode(1);
+		temp = temp.next;
+		temp.next = new ListNode(2);
+		temp = temp.next;
+		temp.next = new ListNode(3);
+		temp = temp.next;
+		temp.next = new ListNode(3);
+		solution.deleteDuplicates(head);
+	}
+
+	@Test
+	public void testReverseList() {
+		ListNode head = new ListNode(1);
+		ListNode temp = head;
+		temp.next = new ListNode(2);
+		temp = temp.next;
+		temp.next = new ListNode(3);
+		temp = temp.next;
+		temp.next = new ListNode(4);
+		temp = temp.next;
+		temp.next = new ListNode(5);
+		head = solution.reverseList(head);
 	}
 }

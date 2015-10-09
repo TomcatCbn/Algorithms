@@ -2,6 +2,7 @@ package com.cbn.leetcode;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Set;
 
 import com.cbn.leetcode.model.ListNode;
 import com.cbn.leetcode.model.TreeNode;
@@ -375,5 +376,32 @@ public class Solution {
 			i++;
 		}
 		return b;
+	}
+
+	/**
+	 * #202 Happy Number
+	 * 
+	 * @param n
+	 * @return
+	 */
+	public boolean isHappy(int n) {
+		Set<Integer> inLoop = new HashSet<Integer>();
+		int squareSum, remain;
+		// 出现重复就停止循环
+		while (inLoop.add(n)) {
+			squareSum = 0;
+			// do HappNumber
+			while (n > 0) {
+				remain = n % 10;
+				squareSum += remain * remain;
+				n /= 10;
+			}
+			if (squareSum == 1)
+				return true;
+			else
+				n = squareSum;
+
+		}
+		return false;
 	}
 }

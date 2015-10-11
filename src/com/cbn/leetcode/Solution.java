@@ -404,4 +404,99 @@ public class Solution {
 		}
 		return false;
 	}
+
+	/**
+	 * #204 Count Primes(质数）
+	 * 
+	 * @param n
+	 * @return
+	 */
+	public int countPrimes(int n) {
+		boolean[] isPrime = new boolean[n];
+		for (int i = 2; i < n; i++) {
+			isPrime[i] = true;
+		}
+		// Loop's ending condition is i * i < n instead of i < sqrt(n)
+		// to avoid repeatedly calling an expensive function sqrt().
+		for (int i = 2; i * i < n; i++) {// 循环次数为根号N
+			if (!isPrime[i])
+				continue;
+			for (int j = i * i; j < n; j += i) {// 从i^2开始，i^2+i..i^2+2*i
+				isPrime[j] = false;
+			}
+		}
+		int count = 0;
+		for (int i = 2; i < n; i++) {
+			if (isPrime[i])
+				count++;
+		}
+		return count;
+	}
+
+	/**
+	 * #21 Merge Two Sorted Lists
+	 * 
+	 * @param l1
+	 * @param l2
+	 * @return
+	 */
+	public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+		if (l1 == null)
+			return l2;
+		if (l2 == null)
+			return l1;
+		// 递归！！
+		if (l1.val < l2.val) {
+			l1.next = mergeTwoLists(l1.next, l2);
+			return l1;
+		} else {
+			l2.next = mergeTwoLists(l1, l2.next);
+			return l2;
+		}
+	}
+
+	/**
+	 * #136 Single Number 通过异或操作
+	 * 
+	 * @param nums
+	 * @return
+	 */
+	public int singleNumber(int[] nums) {
+		int length = nums.length;
+		int sum = 0;
+		for (int i = 0; i < length; i++) {
+			sum ^= nums[i];
+		}
+		return sum;
+	}
+
+	/**
+	 * #136 Single Number III Given an array of numbers nums, in which exactly
+	 * two elements appear only once and all the other elements appear exactly
+	 * twice. Find the two elements that appear only once.
+	 * 
+	 * For example:
+	 * 
+	 * Given nums = [1, 2, 1, 3, 2, 5], return [3, 5].
+	 * 根据a^b的值找出最后一位为1的，即区别a和b的地方，将该数组分为两组
+	 * 
+	 * @param nums
+	 * @return
+	 */
+	public int[] singleNumber2(int[] nums) {
+		int aOXRb = 0;
+		int length = nums.length;
+		for (int i = 0; i < length; i++) {
+			aOXRb ^= nums[i];
+		}
+		int lastBit = aOXRb & (-aOXRb);// 找到最后一位是1的数字
+		int[] res = new int[2];
+		for (int j = 0; j < length; j++) {
+			if ((nums[j] & lastBit) == 0)
+				res[0] ^= nums[j];
+			else
+				res[1] ^= nums[j];
+		}
+		return res;
+	}
 }

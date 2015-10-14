@@ -97,4 +97,9 @@ public class LeetcodeTest {
 		temp.next = new ListNode(5);
 		head = solution.reverseList(head);
 	}
+	
+	@Test
+	public void testRemoveDuplicates(){
+		System.out.println(solution.removeDuplicates(new int[]{1,1,1}));
+	}
 }

@@ -14,6 +14,141 @@ import com.cbn.leetcode.model.TreeNode;
  *
  */
 public class Solution {
+
+	public int computeArea(int A, int B, int C, int D, int E, int F, int G, int H) {
+		if (A >= G || E >= C || B >= H || F >= D)
+			return (C - A) * (D - B) + (G - E) * (H - F);
+		int x1 = Math.max(A, E);
+		int y1 = Math.max(B, F);
+		int x2 = Math.min(C, G);
+		int y2 = Math.min(D, H);
+		return (C - A) * (D - B) + (G - E) * (H - F) - (x2 - x1) * (y2 - y1);
+	}
+
+	/**
+	 * #112 Path Sum 递归调用
+	 * 
+	 * @param root
+	 * @param sum
+	 * @return
+	 */
+	public boolean hasPathSum(TreeNode root, int sum) {
+		if (root != null) {
+			int temp = sum - root.val;
+			if (temp == 0 && root.left == null && root.right == null)
+				return true;
+			else
+				return hasPathSum(root.left, temp) || hasPathSum(root.right, temp);
+
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * @26 Remove Duplicates from Sorted Array 两个index指向数组元素，分别移位
+	 * 
+	 * @param nums
+	 * @return
+	 */
+	public int removeDuplicates(int[] nums) {
+		int length = nums.length;
+		int count = length;
+		if (count <= 1)
+			return count;
+		for (int i = 1, j = 0; i < length; i++) {
+			if (nums[j] == nums[i]) {
+				count--;
+			} else {
+				j++;
+				if (j < i)
+					nums[j] = nums[i];
+			}
+		}
+		return count;
+	}
+
+	/**
+	 * #231 Power of Two 判断是否为2的N次方
+	 * 
+	 * @param n
+	 * @return
+	 */
+	public boolean isPowerOfTwo(int n) {
+		return n > 0 && (n & (n - 1)) == 0;
+	}
+
+	/**
+	 * #110 Balanced Binary Tree 判断是否是一颗平衡二叉树
+	 * 
+	 * @param root
+	 * @return
+	 */
+	public boolean isBalanced(TreeNode root) {
+		if (depthOfTreenode(root) == -1)
+			return false;
+		else {
+			return true;
+		}
+	}
+
+	private int depthOfTreenode(TreeNode root) {
+		if (root == null)
+			return 0;
+		int left_depth = depthOfTreenode(root.left);
+		if (left_depth == -1)
+			return -1;
+		int right_depth = depthOfTreenode(root.right);
+		if (right_depth == -1)
+			return -1;
+		if (Math.abs(right_depth - left_depth) > 1)
+			return -1;
+		return 1 + Math.max(right_depth, left_depth);
+
+	}
+
+	/**
+	 * #27 Remove Element
+	 * 
+	 * @param nums
+	 * @param val
+	 * @return
+	 */
+	public int removeElement(int[] nums, int val) {
+
+		int length = nums.length;
+		int count = 0;
+		for (int i = 0, j = 0; i < length; i++) {
+			if (nums[i] == val)
+				count++;
+			else {
+				nums[j++] = nums[i];
+			}
+		}
+		return length - count;
+	}
+
+	/**
+	 * #263 Ugly Number
+	 * 
+	 * @param num
+	 * @return
+	 */
+	public boolean isUgly(int num) {
+		if (num == 0)
+			return false;
+		while (num % 2 == 0)
+			num = num / 2;
+		while (num % 3 == 0)
+			num = num / 3;
+		while (num % 5 == 0)
+			num = num / 5;
+		if (num == 1)
+			return true;
+		else
+			return false;
+	}
+
 	/**
 	 * #290 Given a pattern and a string str, find if str follows the same
 	 * pattern.

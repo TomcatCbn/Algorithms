@@ -102,4 +102,9 @@ public class LeetcodeTest {
 	public void testRemoveDuplicates(){
 		System.out.println(solution.removeDuplicates(new int[]{1,1,1}));
 	}
+	
+	@Test
+	public void testmissingNumber(){
+		System.out.println(solution.missingNumber(new int[]{0}));
+	}
 }

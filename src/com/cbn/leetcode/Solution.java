@@ -1,7 +1,9 @@
 package com.cbn.leetcode;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.cbn.leetcode.model.ListNode;
@@ -14,7 +16,245 @@ import com.cbn.leetcode.model.TreeNode;
  *
  */
 public class Solution {
+	/**
+	 * #137 Single Number II 
+	 * ！！！根据int32位，出现三次，则相加必然是3的倍数。
+	 * 
+	 * @param nums
+	 * @return
+	 */
+	public int singleNumber3(int[] nums) {
+		int res = 0;
+		int k = 0;
+		while (k < 32) {
+			int temp = 0;
+			for (int i = 0; i < nums.length; i++) {
+				temp += ((nums[i] >> k) & 1);// 每一位所有数加起来，取余数
+			}
+			if (temp % 3 != 0) {
+				res = res | (1 << k);// 每一位或操作
+			}
+			k++;
+		}
+		return res;
+	}
 
+	/**
+	 * 在一个有序的数组查找插入的位置
+	 * 
+	 * @param nums
+	 * @param target
+	 * @return
+	 */
+	public int searchInsert(int[] nums, int target) {
+		int lo = 0, hi = nums.length - 1;
+		while (lo <= hi) {
+			int mid = lo + (hi - lo) / 2;
+			if (target > nums[mid]) {
+				lo = mid + 1;
+			} else if (target < nums[mid]) {
+				hi = mid - 1;
+			} else {
+				return mid;
+			}
+		}
+		return lo;
+	}
+
+	/**
+	 * 缺失的数字
+	 * 
+	 * @param nums
+	 * @return
+	 */
+	public int missingNumber(int[] nums) {
+		int length = nums.length;
+		if (length <= 0)
+			return 0;
+		long sum = (1 + length) * length / 2;
+		for (int i = 0; i < length; i++) {
+			sum -= nums[i];
+		}
+		return (int) sum;
+	}
+
+	/**
+	 * #141 Linked List Cycle 检测链表是否有循环
+	 * 
+	 * @param head
+	 * @return
+	 */
+	public boolean hasCycle(ListNode head) {
+		// 标准解答
+		ListNode fast = head;
+		while (fast != null && fast.next != null) {
+			head = head.next;
+			fast = fast.next.next;
+			if (head == fast)
+				return true;
+		}
+		return false;
+
+		// 我的解答
+		// ListNode pre = new ListNode(0);
+		// pre.next = head;
+		// ListNode h1, h2;
+		// h1 = h2 = pre;
+		// while (h2 != null) {
+		// h1 = h1.next;
+		// h2 = h2.next;
+		// if (h2 != null) {
+		// h2 = h2.next;
+		// if (h2!=null && h2 == h1)
+		// return true;
+		// }
+		// }
+		// return false;
+
+	}
+
+	/**
+	 * #94 Binary Tree Inorder Traversal 中序遍历
+	 * 
+	 * @param root
+	 * @return
+	 */
+	public List<Integer> inorderTraversal(TreeNode root) {
+		List<Integer> list = new ArrayList<Integer>();
+		inorderTraversal0(root, list);
+		return list;
+	}
+
+	private void inorderTraversal0(TreeNode root, List<Integer> list) {
+		if (root == null)
+			return;
+		inorderTraversal0(root.left, list);
+		list.add(root.val);
+		inorderTraversal0(root.right, list);
+
+	}
+
+	/**
+	 * #144 Binary Tree Preorder Traversal 先序遍历二叉树
+	 * 
+	 * @param root
+	 * @return
+	 */
+	public List<Integer> preorderTraversal(TreeNode root) {
+		List<Integer> list = new ArrayList<Integer>();
+		preorderTraversal0(root, list);
+		return list;
+
+		// List<Integer> list = new ArrayList<Integer>();
+		// if (root!=null) {
+		// list.add(root.val);
+		// list.addAll(preorderTraversal(root.left));
+		// list.addAll(preorderTraversal(root.right));
+		// }
+		// return list;
+	}
+
+	private void preorderTraversal0(TreeNode root, List<Integer> list) {
+		if (root == null)
+			return;
+		list.add(root.val);
+		if (root.left != null)
+			preorderTraversal0(root.left, list);
+		if (root.right != null)
+			preorderTraversal0(root.right, list);
+	}
+
+	/**
+	 * #67 Add Binary
+	 * 
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	public String addBinary(String a, String b) {
+		StringBuilder sb = new StringBuilder();
+		int ai = a.length() - 1;
+		int bi = b.length() - 1;
+		int carry = 0;
+		int sum = 0;
+
+		while (ai >= 0 || bi >= 0) {
+			int x = ai >= 0 ? a.charAt(ai) - '0' : 0;
+			int y = bi >= 0 ? b.charAt(bi) - '0' : 0;
+			sum = x ^ y ^ carry;// 1+1再加进位1
+			carry = x + y + carry > 1 ? 1 : 0;
+			sb.insert(0, sum);
+			ai--;
+			bi--;
+		}
+
+		if (carry == 1)
+			sb.insert(0, 1);
+		return sb.toString();
+
+	}
+
+	/**
+	 * #203 Remove Linked List Elements
+	 * 
+	 * @param head
+	 * @param val
+	 * @return
+	 */
+	public ListNode removeElements(ListNode head, int val) {
+		ListNode preHead = new ListNode(0);
+		preHead.next = head;
+		ListNode runner = preHead;
+		while (runner.next != null) {
+			if (runner.next.val == val) {
+				runner.next = runner.next.next;
+			} else {
+				runner = runner.next;
+			}
+		}
+		return preHead.next;
+	}
+
+	/**
+	 * #257 Binary Tree Paths Given a binary tree, return all root-to-leaf
+	 * paths.
+	 * 
+	 * @param root
+	 * @return
+	 */
+	public List<String> binaryTreePaths(TreeNode root) {
+		List<String> list = new ArrayList<String>();
+		if (root != null) {
+			if (root.left == null && root.right == null) {
+				list.add(root.val + "");
+			} else {
+				if (root.left != null) {
+					list.addAll(binaryTreePaths(root.left));
+				}
+				if (root.right != null) {
+					list.addAll(binaryTreePaths(root.right));
+				}
+				for (int i = 0; i < list.size(); i++) {
+					list.set(i, root.val + "->" + list.get(i));
+				}
+			}
+		}
+		return list;
+	}
+
+	/**
+	 * #223 Rectangle Area
+	 * 
+	 * @param A
+	 * @param B
+	 * @param C
+	 * @param D
+	 * @param E
+	 * @param F
+	 * @param G
+	 * @param H
+	 * @return
+	 */
 	public int computeArea(int A, int B, int C, int D, int E, int F, int G, int H) {
 		if (A >= G || E >= C || B >= H || F >= D)
 			return (C - A) * (D - B) + (G - E) * (H - F);

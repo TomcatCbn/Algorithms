@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import com.cbn.leetcode.Solution;
 import com.cbn.leetcode.model.ListNode;
+import com.cbn.leetcode.model.Point;
 
 /**
  * 
@@ -14,7 +15,9 @@ import com.cbn.leetcode.model.ListNode;
  */
 public class LeetcodeTest {
 	private static Solution solution;
-
+	public static void main(String[] args) {
+		System.out.println(1<<0);
+	}
 	@Before
 	public void init() {
 		solution = new Solution();
@@ -106,5 +109,14 @@ public class LeetcodeTest {
 	@Test
 	public void testmissingNumber(){
 		System.out.println(solution.missingNumber(new int[]{0}));
+	}
+	
+	@Test
+	public void testmaxPoints(){
+		Point[] points=new Point[3];
+		points[0]=new Point(0,0);
+		points[1]=new Point(-1,-1);
+		points[2]=new Point(2,2);
+		System.out.println(solution.maxPoints(points));
 	}
 }

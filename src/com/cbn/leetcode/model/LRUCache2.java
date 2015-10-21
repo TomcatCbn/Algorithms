@@ -3,9 +3,16 @@ package com.cbn.leetcode.model;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 用HashMap存储元素<key,CacheNode>,CacheNode是一个双向链表，一个头是最近使用的元素，一个尾是最久未使用，
+ * 最后用一个int确保CacheNode结点的个数
+ * 
+ * @author boning
+ *
+ */
 public class LRUCache2 {
-	int totalCap;
-	int currCap;
+	int totalCap;// 总容量
+	int currCap;// 目前个数
 	Map<Integer, CacheNode> map;
 	CacheNode lru, mru;
 
@@ -36,10 +43,10 @@ public class LRUCache2 {
 
 	public void set(int key, int value) {
 		if (map.containsKey(key)) {
-			map.get(key).value = value;
-			if (map.get(key) == mru)
+			map.get(key).value = value;// 更新key-value对
+			if (map.get(key) == mru) // 如果更新的元素恰好是最新的元素 不做移位修改
 				return;
-			else if (map.get(key) == lru) {
+			else if (map.get(key) == lru) {// 如果更新的元素恰好是最久未使用的元素，则删除它，移到队头
 				lru = lru.newer;
 				lru.older = null;
 			} else {
@@ -80,8 +87,8 @@ public class LRUCache2 {
 	class CacheNode {
 		int key;
 		int value;
-		CacheNode newer;
-		CacheNode older;
+		CacheNode newer;// ==结点左边新加入的
+		CacheNode older;// ==结点右边
 
 		CacheNode(int k, int v) {
 			key = k;

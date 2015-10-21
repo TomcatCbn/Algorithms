@@ -3,10 +3,12 @@ package com.cbn.leetcode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import com.cbn.leetcode.model.ListNode;
+import com.cbn.leetcode.model.Point;
 import com.cbn.leetcode.model.TreeNode;
 
 /**
@@ -17,8 +19,108 @@ import com.cbn.leetcode.model.TreeNode;
  */
 public class Solution {
 	/**
-	 * #137 Single Number II 
-	 * ！！！根据int32位，出现三次，则相加必然是3的倍数。
+	 * Max Points on a Line 对每个i，初始化一个哈希表，key 为斜率，value
+	 * 为该直线上的点数。遍历结束后得到和当前i点共线的点的最大值，再和全局最大值比较，最后就是结果。
+	 * 时间复杂度O(n2)，空间复杂度O(n)。
+	 * 
+	 * 其中有几点要注意的是： 存在坐标一样的点；存在斜率不存在的点（与x轴平行的直线）。
+	 * 
+	 * @param points
+	 * @return
+	 */
+	public int maxPoints(Point[] points) {
+		if (points.length <= 2) {
+			return points.length;
+		}
+		// 斜率
+		double k = 0.0;
+		int maxPointNum = 0;
+		int tempMaxPointNum = 0;
+		// 坐标完全相同点的个数
+		int samePointNum = 0;
+		// 与y轴平行
+		int parallelPointNum = 0;
+		HashMap<Double, Integer> slopeMap = new HashMap<Double, Integer>();
+		for (int i = 0; i < points.length - 1; i++) {
+			// 代表起始点，会被累加上
+			samePointNum = 1;
+			parallelPointNum = 0;
+			tempMaxPointNum = 0;
+			slopeMap.clear();
+			for (int j = i + 1; j < points.length; j++) {
+				// 坐标完全相同
+				if ((points[i].x == points[j].x) && ((points[i].y == points[j].y))) {
+					samePointNum++;
+					continue;
+				}
+				// 与y轴平行
+				if (points[i].x == points[j].x) {
+					parallelPointNum++;
+				} else {
+					if (points[i].y == points[j].y) {
+						k = 0;
+					} else {
+						k = ((double) (points[i].y - points[j].y)) / (points[i].x - points[j].x);
+					}
+					// 斜率不存在
+					if (slopeMap.get(k) == null) {
+						slopeMap.put(k, new Integer(1));
+						if (1 > tempMaxPointNum) {
+							tempMaxPointNum = 1;
+						}
+					} else {
+						// 斜率已存在
+						int number = slopeMap.get(k);
+						number++;
+						slopeMap.put(k, new Integer(number));
+						if (number > tempMaxPointNum) {
+							tempMaxPointNum = number;
+						}
+					}
+				}
+			} // end of for
+
+			if (parallelPointNum > 1) {
+				if (parallelPointNum > tempMaxPointNum) {
+					tempMaxPointNum = parallelPointNum;
+				}
+			}
+			// 加上起始点和具有相同坐标的点
+			tempMaxPointNum += samePointNum;
+			if (tempMaxPointNum > maxPointNum) {
+				maxPointNum = tempMaxPointNum;
+			}
+		}
+		return maxPointNum;
+	}
+
+	/**
+	 *#190	Reverse Bits
+	 * Reverse bits of a given 32 bits unsigned integer.
+	 * 
+	 * For example, given input 43261596 (represented in binary as
+	 * 00000010100101000001111010011100), return 964176192 (represented in
+	 * binary as 00111001011110000010100101000000).
+	 * 
+	 * 
+	 * @param n
+	 * @return
+	 */
+	// you need treat n as an unsigned value
+	public int reverseBits(int n) {
+		int res = 0;
+		for (int i = 31; i >= 0; i--) {
+			// 判断末尾一位是1or0
+			if ((n & 1) == 1) {
+				res += (1 << (i));
+			}
+			n >>>= 1;
+		}
+		return res;
+	}
+
+	/**
+	 * #137 Single Number II ！！！根据int32位，出现三次，则相加必然是3的倍数。
 	 * 
 	 * @param nums
 	 * @return
@@ -874,4 +976,5 @@ public class Solution {
 		}
 		return res;
 	}
+	
 }

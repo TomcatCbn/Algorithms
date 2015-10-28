@@ -58,8 +58,5 @@ public class Digraph {
 		return R;
 	}
 
-	@Override
-	public String toString() {
-
-	}
+	
 }

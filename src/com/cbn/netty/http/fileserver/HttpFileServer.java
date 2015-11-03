@@ -1,4 +1,4 @@
-package com.cbn.http.fileserver;
+package com.cbn.netty.http.fileserver;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -34,7 +34,7 @@ public class HttpFileServer {
 						@Override
 						protected void initChannel(SocketChannel ch) throws Exception {
 							ch.pipeline().addLast("http-decoder", new HttpRequestDecoder());
-							ch.pipeline().addLast("http-aggregator", new HttpObjectAggregator(65536));
+							ch.pipeline().addLast("http-aggregator", new HttpObjectAggregator(65536));//分解httpmessage成单个http请求
 							ch.pipeline().addLast("http-encoder", new HttpResponseEncoder());
 							ch.pipeline().addLast("http-chunked", new ChunkedWriteHandler());
 							ch.pipeline().addLast("fileServerHandler", new HttpFileServerHandler(url));

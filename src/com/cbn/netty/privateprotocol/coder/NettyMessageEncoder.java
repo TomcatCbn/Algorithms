@@ -27,7 +27,7 @@ public final class NettyMessageEncoder extends MessageToMessageEncoder<NettyMess
 		ByteBuf sendBuf = Unpooled.buffer();
 		//将NettyMessage的Header写入buffer
 		sendBuf.writeInt(msg.getHeader().getCrcCode());
-		sendBuf.writeInt(msg.getHeader().getLength());
+		sendBuf.writeInt(msg.getHeader().getLength());//消息长度
 		sendBuf.writeLong(msg.getHeader().getSessionID());
 		sendBuf.writeByte(msg.getHeader().getType());
 		sendBuf.writeByte(msg.getHeader().getPriority());

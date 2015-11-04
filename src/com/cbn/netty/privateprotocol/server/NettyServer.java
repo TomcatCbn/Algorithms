@@ -34,6 +34,9 @@ public class NettyServer {
 
 						@Override
 						protected void initChannel(SocketChannel ch) throws Exception {
+							//第一个参数最大帧的长度，第二个长度属性的起始偏移量
+							//第三个长度属性的长度，第四个起始偏移量+长度=结束偏移量
+							//解码后需要跳过的字节数
 							ch.pipeline().addLast("MessageDecoder", new NettyMessageDecoder(1024 * 1024, 4, 4,-8,0));
 							ch.pipeline().addLast("MessageEncoder", new NettyMessageEncoder());
 							ch.pipeline().addLast("ReadTimeOutHandler", new ReadTimeoutHandler(50));

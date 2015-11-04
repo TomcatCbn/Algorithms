@@ -54,7 +54,7 @@ public class NettyClient {
 				@Override
 				public void run() {
 					try {
-						TimeUnit.SECONDS.sleep(5);
+						TimeUnit.SECONDS.sleep(15);
 						try {
 							connect(port, host);// 发起重连操作
 						} catch (Exception e) {

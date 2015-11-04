@@ -10,7 +10,6 @@ import com.cbn.netty.privateprotocol.model.NettyMessage;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
-import io.netty.handler.codec.marshalling.MarshallingDecoder;
 
 /**
  * Netty消息解码类
@@ -21,8 +20,8 @@ import io.netty.handler.codec.marshalling.MarshallingDecoder;
 public class NettyMessageDecoder extends LengthFieldBasedFrameDecoder {
 	private NettyMarshallingDecoder nettyMarshallingDecoder;
 
-	public NettyMessageDecoder(int maxFrameLength, int lengthFieldOffset, int lengthFieldLength) throws IOException {
-		super(maxFrameLength, lengthFieldOffset, lengthFieldLength);
+	public NettyMessageDecoder(int maxFrameLength, int lengthFieldOffset, int lengthFieldLength, int lengthAdjustment, int initialBytesToStrip) throws IOException {
+		super(maxFrameLength, lengthFieldOffset, lengthFieldLength, lengthAdjustment, initialBytesToStrip);
 		nettyMarshallingDecoder = MarshallingCodeCFactory.buildMarshallingDecoder();
 
 	}

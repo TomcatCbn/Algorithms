@@ -4,6 +4,7 @@ import java.net.InetSocketAddress;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.cbn.netty.privateprotocol.model.Header;
+import com.cbn.netty.privateprotocol.model.MessageType;
 import com.cbn.netty.privateprotocol.model.NettyMessage;
 
 import io.netty.channel.ChannelHandlerAdapter;
@@ -11,6 +12,8 @@ import io.netty.channel.ChannelHandlerContext;
 
 /**
  * 服务端响应Login的业务ChannelHandler
+ * 
+ * 
  * @author boning
  *
  */
@@ -31,7 +34,7 @@ public class LoginAuthRespHandler extends ChannelHandlerAdapter{
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		NettyMessage message=(NettyMessage) msg;
 		//如果是握手消息，处理，其他消息透传
-		if(message.getHeader()!=null && message.getHeader().getType()== (byte)1){
+		if(message.getHeader()!=null && message.getHeader().getType()== MessageType.LOGIN_REQ){
 			String nodeIndex = ctx.channel().remoteAddress().toString();
 			//System.out.println("Login is ok , come from "+nodeIndex);
 			NettyMessage loginResp =null;
@@ -43,19 +46,19 @@ public class LoginAuthRespHandler extends ChannelHandlerAdapter{
 				InetSocketAddress address = (InetSocketAddress) ctx.channel().remoteAddress();
 				String ip=address.getAddress().getHostAddress();
 				boolean isOk= false;
+				//白名单检验
 				for(String wip:whileList){
 					if(wip.equals(ip)){
 						isOk=true;
 						break;
 					}
 				}
-				loginResp=isOk?buildResponse((byte)0):buildResponse((byte)-1);
+				loginResp=isOk?buildResponse((byte)0):buildResponse((byte)-1);//0成功，-1失败
 				if(isOk)
 					nodeCheck.put(nodeIndex, true);
 			}
 			System.out.println("The login response is : "+loginResp+" body ["+loginResp.getBody()+"]");
 			ctx.writeAndFlush(loginResp);
-			String body = (String)message.getBody();
 		}else{
 			ctx.fireChannelRead(msg);
 		}
@@ -64,16 +67,11 @@ public class LoginAuthRespHandler extends ChannelHandlerAdapter{
 	private NettyMessage buildResponse(byte result) {
 		NettyMessage message = new NettyMessage();
 		Header header = new Header();
-		header.setType((byte)2);
+		header.setType(MessageType.LOGIN_RESP);
 		message.setHeader(header);
 		message.setBody(result);
 		return message;
 	}
 
-	@Override
-	public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
-		// TODO Auto-generated method stub
-		super.channelReadComplete(ctx);
-	}
 	
 }

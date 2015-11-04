@@ -1,6 +1,7 @@
 package com.cbn.netty.privateprotocol.heartbeat;
 
 import com.cbn.netty.privateprotocol.model.Header;
+import com.cbn.netty.privateprotocol.model.MessageType;
 import com.cbn.netty.privateprotocol.model.NettyMessage;
 
 import io.netty.channel.ChannelHandlerAdapter;
@@ -18,9 +19,9 @@ public class HeartBeatRespHandler extends ChannelHandlerAdapter {
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		NettyMessage message = (NettyMessage) msg;
 		// 返回心跳应答消息
-		if (message.getHeader() != null && message.getHeader().getType() == (byte) 3) {
+		if (message.getHeader() != null && message.getHeader().getType() == MessageType.HEART_BEAT_REQ) {
 			System.out.println("Receive client heart beat message : -->" + message);// 打印接收到的心跳消息
-			NettyMessage heartBeat = buildHeartBeat();
+			NettyMessage heartBeat = buildHeartBeat();//创建心跳应答消息
 			System.out.println("Send heart beat response message to client : -->" + heartBeat);// 打印发出的心跳消息
 			ctx.writeAndFlush(heartBeat);
 		} else {
@@ -29,10 +30,9 @@ public class HeartBeatRespHandler extends ChannelHandlerAdapter {
 	}
 
 	private NettyMessage buildHeartBeat() {
-		// TODO Auto-generated method stub
 		NettyMessage message = new NettyMessage();
 		Header header = new Header();
-		header.setType((byte) 4);
+		header.setType(MessageType.HEART_BEAT_RESP);
 		message.setHeader(header);
 		return message;
 	}

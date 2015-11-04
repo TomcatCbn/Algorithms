@@ -53,10 +53,14 @@ public final class NettyMessageEncoder extends MessageToMessageEncoder<NettyMess
 		if(msg.getBody()!=null){
 			marshallingEncoder.encode(ctx, msg.getBody(),sendBuf);
 			
-		}else{
-			sendBuf.writeInt(0);
-			sendBuf.setInt(4, sendBuf.readableBytes());
 		}
+//		else{
+//			sendBuf.writeInt(0);
+//			sendBuf.setInt(4, sendBuf.readableBytes());
+//		}
+		//在第4个字节写入Buffer的长度
+		int readableBytes = sendBuf.readableBytes();
+		sendBuf.setInt(4, readableBytes);
 		
 		//把Message添加到List传递到下一个Handler
 		out.add(sendBuf);

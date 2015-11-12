@@ -39,7 +39,7 @@ public class UnionFind {
 	 * @param p
 	 * @param q
 	 */
-	private void union(int p, int q) {
+	public void union(int p, int q) {
 		int index_p = find(p);
 		int index_q = find(q);
 		if (index_p == index_q)
